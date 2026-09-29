@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShieldAlt, faWallet } from "@fortawesome/free-solid-svg-icons";
-import Link from "next/link";
 
 const securityOptions = [
   {
@@ -23,10 +22,10 @@ const checklist = [
   "Transaction signatures are always verified and securely monitored in real time.",
 ];
 
-export default function SecurePage() {
+export default function SecurePage({ onConnect }: { onConnect: () => void }) {
   return (
     <div className="min-h-screen bg-[#f5f7ff] text-slate-900">
-      <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-5">
+      <header className="mx-auto flex w-full max-w -6xl items-center justify-between px-6 py-5">
         <div className="text-sm font-semibold tracking-[0.22em] text-[#1e3a8a]">CRYPTICAI</div>
         <nav className="hidden items-center gap-6 text-[10px] font-medium uppercase tracking-[0.18em] text-slate-400 sm:flex">
           <a href="#" className="transition hover:text-[#1d4ed8]">Safety</a>
@@ -110,9 +109,9 @@ export default function SecurePage() {
               }`;
 
               return option.title === "Connect Existing Wallet" ? (
-                <Link key={option.title} href="/connect" className={className}>
+                <button key={option.title} type="button" onClick={onConnect} className={className}>
                   {card}
-                </Link>
+                </button>
               ) : (
                 <button key={option.title} type="button" className={className}>
                   {card}

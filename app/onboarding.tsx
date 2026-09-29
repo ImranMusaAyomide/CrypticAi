@@ -1,8 +1,8 @@
-import Link from "next/link";
+import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
-export default function Onboarding() {
+export default function Onboarding({ onGetStarted }: { onGetStarted: () => void }) {
   return (
     <>
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-5">
@@ -37,12 +37,12 @@ export default function Onboarding() {
               ))}
             </ul>
             <div className="mt-7 flex flex-wrap items-center gap-3">
-              <Link href="/secure" className="inline-flex items-center gap-2 rounded-lg bg-brand-blue px-5 py-2.5 text-xs font-semibold text-white shadow-card transition-transform hover:-translate-y-0.5">
+              <button type="button" onClick={onGetStarted} className="inline-flex items-center gap-2 rounded-lg bg-brand-blue px-5 py-2.5 text-xs font-semibold text-white shadow-card transition-transform hover:-translate-y-0.5">
                 <span>Get started</span>
                 <span aria-hidden="true" className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-white/15">
                   <FontAwesomeIcon icon={faArrowRight} className="h-3 w-3 text-white" />
                 </span>
-              </Link>
+              </button>
               <a href="#demo" className="rounded-lg border border-brand-blue px-5 py-2.5 text-xs font-semibold text-brand-blue transition-colors hover:bg-blue-50">
                 View demo
               </a>
@@ -56,7 +56,13 @@ export default function Onboarding() {
               AI core active
             </span>
             <div className="overflow-hidden rounded-2xl bg-slate-100 shadow-2xl shadow-slate-200/70">
-              <img src="/web3secure.svg" alt="WEB3 artwork" className="block h-auto w-full" />
+              <Image
+                src="/web3secure.svg"
+                alt="WEB3 artwork"
+                width={498}
+                height={369}
+                className="block h-auto w-full"
+              />
               <div className="flex items-center justify-between bg-white px-4 py-2 text-[9px] font-medium uppercase tracking-wide text-slate-400">
                 <span>Recent session</span>
                 <span className="text-emerald-500">Secure connection</span>
