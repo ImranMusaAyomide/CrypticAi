@@ -12,7 +12,6 @@ import {
   faChartPie,
   faChevronRight,
   faCircleCheck,
-  faClockRotateLeft,
   faDownload,
   faEye,
   faFingerprint,
@@ -25,6 +24,7 @@ import {
   faTowerBroadcast,
   faTrophy,
   faXmark,
+  faWallet,
 } from "@fortawesome/free-solid-svg-icons";
 import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 
@@ -33,7 +33,7 @@ config.autoAddCss = false;
 const navItems: { label: string; icon: IconDefinition; active?: boolean }[] = [
   { label: "Dashboard", icon: faTableCellsLarge, active: true },
   { label: "Balance", icon: faChartPie },
-  { label: "History", icon: faClockRotateLeft },
+  { label: "Wallet", icon: faWallet },
   { label: "Settings", icon: faGear },
 ];
 
@@ -98,7 +98,13 @@ const confirmationPoints = [
 
 const auditBadges = ["Blockfort", "Cybersec", "Ethaudit", "TrustWeb3"];
 
-export default function Dashboard() {
+export default function Dashboard({
+  onBalance,
+  onWallet,
+}: {
+  onBalance?: () => void;
+  onWallet?: () => void;
+}) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -141,9 +147,16 @@ export default function Dashboard() {
               </div>
               <nav className="mt-8 space-y-1">
                 {navItems.map((item) => (
-                  <a
+                  <button
                     key={item.label}
-                    href="#"
+                    type="button"
+                    onClick={
+                      item.label === "Balance"
+                        ? onBalance
+                        : item.label === "Wallet"
+                          ? onWallet
+                          : undefined
+                    }
                     className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium ${
                       item.active
                         ? "bg-slate-100 text-slate-900"
@@ -152,7 +165,7 @@ export default function Dashboard() {
                   >
                     <FontAwesomeIcon icon={item.icon} className="w-4" />
                     {item.label}
-                  </a>
+                  </button>
                 ))}
               </nav>
             </div>
@@ -176,9 +189,16 @@ export default function Dashboard() {
             </span>
             <nav className="mt-10 space-y-1">
               {navItems.map((item) => (
-                <a
+                <button
                   key={item.label}
-                  href="#"
+                  type="button"
+                  onClick={
+                    item.label === "Balance"
+                      ? onBalance
+                      : item.label === "Wallet"
+                        ? onWallet
+                        : undefined
+                  }
                   className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
                     item.active
                       ? "bg-slate-100 text-slate-900"
@@ -187,7 +207,7 @@ export default function Dashboard() {
                 >
                   <FontAwesomeIcon icon={item.icon} className="w-4" />
                   {item.label}
-                </a>
+                </button>
               ))}
             </nav>
           </div>
