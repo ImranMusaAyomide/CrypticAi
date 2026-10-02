@@ -101,25 +101,52 @@ const auditBadges = ["Blockfort", "Cybersec", "Ethaudit", "TrustWeb3"];
 export default function Dashboard({
   onBalance,
   onWallet,
+  onConnect,
 }: {
   onBalance?: () => void;
   onWallet?: () => void;
+  onConnect?: () => void;
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isConnected, setIsConnected] = useState(true);
+
+  function handleConnectionClick() {
+    if (isConnected) {
+      setIsConnected(false);
+      return;
+    }
+
+    onConnect?.();
+  }
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
       {/* Mobile top bar */}
       <div className="flex items-center justify-between border-b border-slate-100 px-4 py-4 md:hidden">
         <span className="text-lg font-bold text-brand-blue">CrypticAI</span>
-        <button
-          type="button"
-          onClick={() => setMenuOpen(true)}
-          aria-label="Open menu"
-          className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-600"
-        >
-          <FontAwesomeIcon icon={faBars} />
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={handleConnectionClick}
+            aria-pressed={isConnected}
+            className={`inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs font-semibold ${
+              isConnected
+                ? "bg-blue-50 text-brand-blue"
+                : "bg-emerald-600 text-white hover:bg-emerald-700"
+            }`}
+          >
+            <FontAwesomeIcon icon={isConnected ? faCircleCheck : faWallet} />
+            {isConnected ? "Connected" : "Connect wallet"}
+          </button>
+          <button
+            type="button"
+            onClick={() => setMenuOpen(true)}
+            aria-label="Open menu"
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-600"
+          >
+            <FontAwesomeIcon icon={faBars} />
+          </button>
+        </div>
       </div>
 
       {/* Mobile slide-over menu */}
@@ -228,10 +255,19 @@ export default function Dashboard({
               Simple &amp; Secure
             </h1>
             <div className="flex items-center gap-3">
-              <span className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-3 py-1.5 text-xs font-semibold text-brand-blue">
-                <FontAwesomeIcon icon={faCircleCheck} />
-                Connected
-              </span>
+              <button
+                type="button"
+                onClick={handleConnectionClick}
+                aria-pressed={isConnected}
+                className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${
+                  isConnected
+                    ? "bg-blue-50 text-brand-blue hover:bg-blue-100"
+                    : "bg-emerald-600 text-white hover:bg-emerald-700"
+                }`}
+              >
+                <FontAwesomeIcon icon={isConnected ? faCircleCheck : faWallet} />
+                {isConnected ? "Connected" : "Connect wallet"}
+              </button>
               <button
                 type="button"
                 aria-label="Notifications"

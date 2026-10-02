@@ -131,7 +131,7 @@ const activity = [
   },
 ];
 
-export default function Balance() {
+export default function Balance({ onDashboard }: { onDashboard?: () => void }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -183,9 +183,15 @@ export default function Balance() {
               </div>
               <nav className="mt-8 space-y-1">
                 {navItems.map((item) => (
-                  <a
+                  <button
                     key={item.label}
-                    href="#"
+                    type="button"
+                    onClick={() => {
+                      if (item.label === "Dashboard") {
+                        onDashboard?.();
+                        setMenuOpen(false);
+                      }
+                    }}
                     className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium ${
                       item.active
                         ? "bg-slate-100 text-slate-900"
@@ -194,7 +200,7 @@ export default function Balance() {
                   >
                     <FontAwesomeIcon icon={item.icon} className="w-4" />
                     {item.label}
-                  </a>
+                  </button>
                 ))}
               </nav>
             </div>
@@ -218,9 +224,12 @@ export default function Balance() {
             </span>
             <nav className="mt-10 space-y-1">
               {navItems.map((item) => (
-                <a
+                <button
                   key={item.label}
-                  href="#"
+                  type="button"
+                  onClick={() => {
+                    if (item.label === "Dashboard") onDashboard?.();
+                  }}
                   className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
                     item.active
                       ? "bg-slate-100 text-slate-900"
@@ -229,7 +238,7 @@ export default function Balance() {
                 >
                   <FontAwesomeIcon icon={item.icon} className="w-4" />
                   {item.label}
-                </a>
+                </button>
               ))}
             </nav>
           </div>
